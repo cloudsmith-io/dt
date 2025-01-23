@@ -2,43 +2,43 @@
 
 DT: Debug Toolkit? Deep Thinking? Desperately Trying? Definitely Temporary? Dubious Technology? Maybe.
 
-This is a mini-framework for solving coding puzzles. It runs on GitHub Codespaces, with little effort.
+This is a mini-framework for solving coding puzzles. It runs on GitHub Codespaces with little effort.
 
 ## Getting Started
 
-Your objective, is to solve puzzles by editing the following files:
+Your objective is to solve puzzles by editing the following files:
 
 - `dt/01.py` - Day 1
 - `dt/02.py` - Day 2
 
-If you're solving [AoC puzzles](https://adventofcode.com/), you'll need to go there, and get the input for your puzzle, and then put it into one of the following places:
+If you're solving [AoC puzzles](https://adventofcode.com/), you'll need to go there, get the input for your puzzle, and then put it into one of the following places:
 
 - `dt/input/01.txt` - Day 1 Input
 - `dt/input/02.txt` - Day 2 Input
 
-If you're playing multiplayer (everyone with their own solution), but sharing code, then you can put them in places like this:
+If you're playing multiplayer (everyone with their solution) but sharing code, then you can put them in places like this:
 
 - `dt/input/01.txt` - Day 1 Input (Team Lead)
 - `dt/input/01a.txt` - Day 1 Input (Team Member A)
 - `dt/input/01b.txt` - Day 1 Input (Team Member B)
 
-Then, when running the CLI (see later on how), just pass `-i 01b.txt` to use the `01b.txt` input above.
+Then, when running the CLI (see later on how), just pass `-i a` to use the `01a.txt` input above (or `-i b` to use `01b.txt`, etc.)
 
 ## Python!?!
 
 Alas, DT is only built to support the [Python programming language only](https://docs.python.org/3/) (sorry, NextJS-ish folks! <3)
 
-Here's some resources to help you out, in addition to some awesome colleagues around you. :)
+Here are some resources to help you on your merry way:
 
-Downloadable Python Cheat Sheet:
-[[!Python Cheat Sheet](https://media.datacamp.com/legacy/image/upload/v1673614099/Python_Cheat_Sheet_for_Beginners_f939d6b1bb.png)](https://media.datacamp.com/legacy/image/upload/v1694526244/Marketing/Blog/Python_Basics_Cheat_Sheet-updated.pdf)
-
-Other Resources:
-
+- [Downloadable Python Cheat Sheet](https://github.com/ehmatthes/pcc_3e/releases/download/v1.0.0/beginners_python_cheat_sheet_pcc_all.pdf)
 - [Online (More In-Depth) Cheat Sheet](https://www.pythoncheatsheet.org/cheatsheet/basics)
 - [Solving Puzzles Like AoC](https://realpython.com/python-advent-of-code/)
 
-P.S. NextJS folks: If it's too painful, just install nvm into the devcontainer. :)
+There's also a full example of solving a puzzle down below.
+
+You can always ask those most excellent colleagues around you, too (and the DMs!)
+
+P.S. NextJS folks: If it's too painful, install nvm into the devcontainer. :)
 
 ## Executing the CLI
 
@@ -75,6 +75,12 @@ To force it to run with your example data instead of an input:
 python -m dt 1 -e
 ```
 
+### It Doesn't Work :(
+
+If any of the above doesn't work, it's probably because it is the first time
+you have opened the GitHub Codespaces or VSCode. Just open a new terminal, or
+reload the GitHub Codespaces (or VSCode).
+
 ## Executing Tests
 
 If you'd like to execute your tests, you can pass `--test` to the CLI or execute `pytest`.
@@ -91,7 +97,7 @@ OK, so we'll solve Part 1 of [Day 1 of AoC 2022](https://adventofcode.com/2022/d
 
 ### The Problem
 
-Imagine you're helping Santa's elves organize their snacks. Each elf carries several snacks, and each snack has a number of calories. The elves wrote down their snacks like this:
+Imagine you're helping Santa's elves organize their groups of snacks by total calories. Each elf carries several snacks, and each snack has a number of calories. The elves wrote down their snacks like this:
 
 ```
 1000
@@ -113,6 +119,13 @@ Imagine you're helping Santa's elves organize their snacks. Each elf carries sev
 Each elf's snacks are separated by blank lines. We need to find which elf is carrying the most calories total.
 
 ### The Solution
+
+OK, so we need to:
+
+- Read the groups of elf snacks (their calories).
+- Calculate a total for each of the groups (one per elf).
+- Find out which is the greatest total.
+- Use that total as the answer.
 
 Here's how we can solve this in Python, with each step explained:
 
@@ -148,7 +161,7 @@ def solve() -> int:
     elf_totals = []
 
     # Iterate through each snack in the list
-    for elf_snack in elf_snacks:
+    for elf_snacks in elf_groups:
         # Split each elf's snacks into separate numbers
         calories = elf_snacks.split("\n")
 
@@ -169,21 +182,27 @@ result = solve()
 print(f"The elf carrying the most calories has {result} calories!")
 ```
 
-That's pretty much it. You can run it yourself by copying and pasting
-the above to a file like `solution.py`, and running it like:
+That's pretty much it.
+
+You can run it yourself by copying and pasting the above to a file like
+`solution.py`, and running it like:
 
 ```
 python solution.py
 ```
 
+It _should_ say:
+
+"The elf carrying the most calories has 24000 calories!"
+
 But, of course, it only solves the example, and only solves part 1. But
-hopefully it gives you an idea of what this looks and feels like. :)
+hopefully, it gives you an idea of what solving a puzzle looks and feels like.
 
 ## Help!?!
 
-Just ask the DMs for more help, if you're stuck with environment issues.
+Just ask the DMs for more help if you're stuck with environmental issues.
 
-If you need help on puzzles, then you need to use a WTD signal + token.
+If you need help with puzzles, then you need to use a WTD signal + token.
 
 ## Have Fun
 

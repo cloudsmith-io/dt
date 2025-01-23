@@ -14,12 +14,7 @@
             "label": "Run Application (Current File/Day)",
             "type": "shell",
             "command": "python",
-            "args": [
-                "-m",
-                "dt",
-                "-d",
-                "${file}"
-            ],
+            "args": ["-m", "dt", "-d", "${file}"],
             "group": "execute",
             "presentation": {
                 "reveal": true,
@@ -30,13 +25,7 @@
             "label": "Run Application (Current File/Day Examples)",
             "type": "shell",
             "command": "python",
-            "args": [
-                "-m",
-                "dt",
-                "-d",
-                "${file}",
-                "-e"
-            ],
+            "args": ["-m", "dt", "-d", "${file}", "-e"],
             "group": "execute",
             "presentation": {
                 "reveal": true,
@@ -47,10 +36,7 @@
             "label": "Run Application (Everything)",
             "type": "shell",
             "command": "python",
-            "args": [
-                "-m",
-                "dt",
-            ],
+            "args": ["-m", "dt"],
             "presentation": {
                 "reveal": true,
                 "panel": "shared"

@@ -3,6 +3,7 @@ DT - Run All The Things.
 
 You don't need to edit anything in this file (unless you want to!)
 """
+
 from __future__ import annotations
 
 import argparse
@@ -96,11 +97,11 @@ def generate_parser() -> argparse.ArgumentParser:
         add_help=False,
     )
     parser.add_argument(
-        "days",
+        "puzzles",
         type=str,
         default="all",
         nargs="?",
-        help="the days to execute, split by commas (default: all)",
+        help="the puzzles to execute, split by commas (default: all)",
     )
     parser.add_argument(
         "-h", "--help", action="store_true", help="show this help message and exit."
@@ -110,7 +111,7 @@ def generate_parser() -> argparse.ArgumentParser:
         "--debug-path",
         default=None,
         nargs="?",
-        help="debug the file path (and only execute *that* day)",
+        help="debug the file path (and only execute *that* puzzle)",
     )
     parser.add_argument(
         "-e", "--example", default=False, action="store_true", help="use example inputs."
@@ -153,6 +154,13 @@ def generate_parser() -> argparse.ArgumentParser:
         help="disables output, colours and any interactive elements.",
     )
     parser.add_argument(
+        "-i",
+        "--input",
+        type=str,
+        default=None,
+        help="use an alternative input file (e.g. 'a' -> '01a.txt')",
+    )
+    parser.add_argument(
         "-t",
         "--test",
         default=False,
@@ -193,48 +201,47 @@ def run() -> None:  # noqa: C901
         return
 
     if args.debug_path:
-        args.days = os.path.basename(args.debug_path.rstrip(".py"))
+        args.puzzles = os.path.basename(args.debug_path.rstrip(".py"))
 
-    days = [
+    puzzles = [
         str(int(s)).zfill(2)
-        for s in (range(1, 26) if args.days == "all" else args.days.split(","))
+        for s in (range(1, 26) if args.puzzles == "all" else args.puzzles.split(","))
     ]
 
     if args.test:
-        # Execute pytest, but only with the days specified
+        # Execute pytest, but only with the puzzles specified
         pytest.main([
-            f"dt/{day}.py" for day in days
-            if os.path.exists(f"dt/{day}.py")
+            f"dt/{puzzle}.py" for puzzle in puzzles if os.path.exists(f"dt/{puzzle}.py")
         ])
         return
 
     # Import all modules and read all inputs, upfront
     modules = {}
     inputs = {}
-    for day in days:
+    for puzzle in puzzles:
         try:
-            modules[day] = importlib.import_module(f".{day}", __package__)
-            inputs[day] = utils.read_input(day)
+            modules[puzzle] = importlib.import_module(f".{puzzle}", __package__)
+            inputs[puzzle] = utils.read_input(puzzle, suffix=args.input)
         except ImportError as exc:
             path = pathlib.Path(__file__).parent.resolve()
-            filepath = path / f"{day}.py"
+            filepath = path / f"{puzzle}.py"
             if os.path.exists(filepath):
-                console.print(f"[red]Error importing day {day} ({filepath}):[/red]")
+                console.print(f"[red]Error importing puzzle {puzzle} ({filepath}):[/red]")
                 console.print(f"[red][b]{exc}[/b][/red]")
                 console.print()
                 console.print("Check your code for syntax errors, then try again.")
                 return
 
     if args.suppress_output:
-        for day, module in modules.items():
-            module.solve(data=inputs[day] if not args.example else None)
+        for puzzle, module in modules.items():
+            module.solve(data=inputs[puzzle] if not args.example else None)
         return
 
     table = Table(
         caption_style="on navy_blue",
         row_styles=["", "bold"],
     )
-    table.add_column("day", justify="right", style="bold cyan", no_wrap=True)
+    table.add_column("puzzle", justify="right", style="bold cyan", no_wrap=True)
     table.add_column("p1", style="magenta")
     table.add_column("p2", style="green")
     table.add_column("cpu", justify="left", style="red")
@@ -260,7 +267,7 @@ def run() -> None:  # noqa: C901
     total_chars = 0
 
     def _add_row(
-        day: str | None,
+        puzzle: str | None,
         p1: int | None,
         p2: int | None,
         pc: PerfCounter | None,
@@ -270,9 +277,7 @@ def run() -> None:  # noqa: C901
     ) -> None:
         """Add a row to the table."""
         row = [
-            day
-            if day
-            else "total",
+            puzzle if puzzle else "total",
             maybe_redact(str(p1), args.redact) if p1 is not None else "",
             maybe_redact(str(p2), args.redact) if p2 is not None else "",
             f"user {pc.user:0.2f}%, sys {pc.system:0.2f}%" if pc else "",
@@ -288,7 +293,7 @@ def run() -> None:  # noqa: C901
         table.add_row(*row)
 
     with console.status("[bold green]Solving ...") as status:
-        for day, module in modules.items():
+        for puzzle, module in modules.items():
             counters = []
             once = not args.profile
             max_attempts = 1 if once else args.profile
@@ -296,8 +301,10 @@ def run() -> None:  # noqa: C901
                 attempt = "" if once else f"(profiling {_ + 1} of {max_attempts})"
                 with PerfCounter() as pc:
                     counters.append(pc)
-                    status.update(f"[bold green]Solving day {day} {attempt}...")
-                    p1, p2 = module.solve(data=inputs[day] if not args.example else None)
+                    status.update(f"[bold green]Solving puzzle {puzzle} {attempt}...")
+                    p1, p2 = module.solve(
+                        data=inputs[puzzle] if not args.example else None
+                    )
             if len(counters) > 2:
                 # For "fairness" (subjective), we remove the interquartile range (IQR) of
                 # the timings, and then average the rest.
@@ -307,15 +314,12 @@ def run() -> None:  # noqa: C901
                     counter for counter in counters if lower <= counter.elapsed <= upper
                 ]
             pc = functools.reduce(operator.add, counters) / len(counters)
-            if not p1 and not p2 and args.days == "all" and int(day) != 0:
-                # Ignore uncompleted days, unless explicitly mentioned
-                continue
             day_seconds = ns_to_s(pc.elapsed)
             source = purify_source(inspect.getsource(module))
             sloc = source.count("\n") + 1
             chars = len(source)
 
-            _add_row(day, p1, p2, pc, sloc, chars, day_seconds)
+            _add_row(puzzle, p1, p2, pc, sloc, chars, day_seconds)
 
             total_seconds += day_seconds
             total_sloc += sloc

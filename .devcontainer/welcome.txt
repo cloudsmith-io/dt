@@ -1,0 +1,7 @@
+Welcome to DT ...
+
+You can execute the runner by typing and running: python -m dt
+
+If that doesn't work, start a new terminal (CMD/CTRL+SHIFT+'), or use this instead: uv run python -m dt
+
+May the quack be with you!

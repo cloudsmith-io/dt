@@ -11,9 +11,10 @@
     "customizations": {
         "vscode": {
             "extensions": [
+                "charliermarsh.ruff",
                 "ms-python.python",
                 "editorconfig.editorconfig",
-                "p403n1x87.austin-vscode"
+                "ms-vsliveshare.vsliveshare"
             ],
             "settings": {
                 "python.testing.pytestArgs": ["."],
