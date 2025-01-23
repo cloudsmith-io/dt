@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Module (Current File/Day)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "dt",
+            "args": ["-d", "${file}"]
+        },
+        {
+            "name": "Python Debugger: Module (Current File/Day Examples)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "dt",
+            "args": ["-d", "${file}", "-e"]
+        },
+        {
+            "name": "Python Debugger: Module (Everything)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "dt",
+            "args": []
+        }
+    ]
+}
