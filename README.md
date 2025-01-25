@@ -40,6 +40,53 @@ You can always ask those most excellent colleagues around you, too (and the DMs!
 
 P.S. NextJS folks: If it's too painful, install nvm into the devcontainer. :)
 
+### Basic String Operations
+
+Some helpful pointers on string operations:
+
+```python
+# String indexing (first character is position 0)
+text = "hello"
+first_char = text[0]  # 'h'
+last_char = text[-1]  # 'o'
+
+# String slicing (get parts of string)
+part = text[1:4]  # 'ell'
+
+# String counting
+count = text.count('l')  # 2
+
+# String comparison
+text1 = "cat"
+text2 = "dog"
+are_same = text1 == text2  # False
+
+# Split string into parts
+text = "a,b,c"
+parts = text.split(',')  # ['a', 'b', 'c']
+
+# Join parts into string
+joined = '-'.join(['x', 'y', 'z'])  # 'x-y-z'
+```
+
+### List/Number Operations
+
+Some helpful pointers on list/number operations:
+
+```python
+# List comparisons
+numbers = [1, 2, 3, 4]
+for i in range(1, len(numbers)):
+    if numbers[i] > numbers[i-1]:
+        print(f"{numbers[i]} is bigger than {numbers[i-1]}")
+
+# Sliding window (look at groups of numbers)
+window_size = 3
+for i in range(len(numbers) - window_size + 1):
+    window = numbers[i:i + window_size]
+    print(f"Window: {window}")
+```
+
 ## Executing the CLI
 
 The CLI will:
