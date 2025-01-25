@@ -34,11 +34,9 @@ Here are some resources to help you on your merry way:
 - [Online (More In-Depth) Cheat Sheet](https://www.pythoncheatsheet.org/cheatsheet/basics)
 - [Solving Puzzles Like AoC](https://realpython.com/python-advent-of-code/)
 
-There's also a full example of solving a puzzle down below.
+See the following two sections for pointers related to DT. There's also a complete example of solving a puzzle down below.
 
-You can always ask those most excellent colleagues around you, too (and the DMs!)
-
-P.S. NextJS folks: If it's too painful, install nvm into the devcontainer. :)
+You can always ask those most excellent colleagues around you (and the DMs!)
 
 ### Basic String Operations
 
@@ -110,7 +108,7 @@ You can get help and other options by passing in `-h`:
 python -m dt -h
 ```
 
-To run a specific day, just pass a number:
+To run a specific day, pass a number:
 
 ```
 python -m dt 1
@@ -122,11 +120,17 @@ To force it to run with your example data instead of an input:
 python -m dt 1 -e
 ```
 
+To make it run with a specific into (e.g. `01b.txt`):
+
+```
+python -m dt 1 -i b
+```
+
 ### It Doesn't Work :(
 
 If any of the above doesn't work, it's probably because it is the first time
-you have opened the GitHub Codespaces or VSCode. Just open a new terminal, or
-reload the GitHub Codespaces (or VSCode).
+you have opened the GitHub Codespaces or VSCode. Open a new terminal using `CTRL/CMD+SHIFT+'`,
+or, if that still doesn't work, reload the Codespace.
 
 ## Executing Tests
 
@@ -140,11 +144,11 @@ pytest
 
 ## Example: Solving AoC 2022 - Day 1
 
-OK, so we'll solve Part 1 of [Day 1 of AoC 2022](https://adventofcode.com/2022/day/1) here, to show you what the process looks like.
+OK, so we'll solve Part 1 of [Day 1 of AoC 2022](https://adventofcode.com/2022/day/1) here to show you what the process looks like.
 
 ### The Problem
 
-Imagine you're helping Santa's elves organize their groups of snacks by total calories. Each elf carries several snacks, and each snack has a number of calories. The elves wrote down their snacks like this:
+Imagine you're helping Santa's elves organize their groups of snacks by total calories. Each elf carries several snacks, each with a number of calories. The elves wrote down their snacks like this:
 
 ```
 1000
@@ -163,14 +167,14 @@ Imagine you're helping Santa's elves organize their groups of snacks by total ca
 10000
 ```
 
-Each elf's snacks are separated by blank lines. We need to find which elf is carrying the most calories total.
+Blank lines separate each elf's snacks. We need to find which elf is carrying the most calories.
 
 ### The Solution
 
 OK, so we need to:
 
 - Read the groups of elf snacks (their calories).
-- Calculate a total for each of the groups (one per elf).
+- Calculate a total for each group (one per elf).
 - Find out which is the greatest total.
 - Use that total as the answer.
 
@@ -253,4 +257,4 @@ If you need help with puzzles, then you need to use a WTD signal + token.
 
 ## Have Fun
 
-... And may the quack be with you.
+... And may the quack be with you!
