@@ -16,14 +16,6 @@ If you're solving [AoC puzzles](https://adventofcode.com/), you'll need to go th
 - `dt/input/01.txt` - Day 1 Input
 - `dt/input/02.txt` - Day 2 Input
 
-If you're playing multiplayer (everyone with their solution) but sharing code, then you can put them in places like this:
-
-- `dt/input/01.txt` - Day 1 Input (Team Lead)
-- `dt/input/01a.txt` - Day 1 Input (Team Member A)
-- `dt/input/01b.txt` - Day 1 Input (Team Member B)
-
-Then, when running the CLI (see later on how), just pass `-i a` to use the `01a.txt` input above (or `-i b` to use `01b.txt`, etc.)
-
 ## Python!?!
 
 Alas, DT is only built to support the [Python programming language only](https://docs.python.org/3/) (sorry, NextJS-ish folks! <3)
@@ -34,9 +26,11 @@ Here are some resources to help you on your merry way:
 - [Online (More In-Depth) Cheat Sheet](https://www.pythoncheatsheet.org/cheatsheet/basics)
 - [Solving Puzzles Like AoC](https://realpython.com/python-advent-of-code/)
 
-See the following two sections for pointers related to DT. There's also a complete example of solving a puzzle down below.
+See the following two sections for pointers related to DT.
 
-You can always ask those most excellent colleagues around you (and the DMs!)
+There's also a complete example of solving a puzzle down below.
+
+Plus, you can always ask those most excellent colleagues around you (and the DMs!)
 
 ### Basic String Operations
 
